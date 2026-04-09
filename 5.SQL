@@ -1,0 +1,114 @@
+-- 1. CREATE TABLE
+CREATE TABLE BANK_BRANCH (
+  BRANCH_ID VARCHAR2(5),
+  BRANCH_NAME VARCHAR2(20),
+  BRANCH_ADDRESS VARCHAR2(30),
+  BRANCH_CITY VARCHAR2(20),
+  BRANCH_STATE VARCHAR2(20),
+  BRANCH_OPEN_DATE DATE
+);
+
+--------------------------------------------------
+
+-- 2. INSERT DATA
+INSERT INTO BANK_BRANCH VALUES 
+('B001','BOI','JagnathRoad','Rajkot','Gujarat',TO_DATE('22-MAR-2015','DD-MON-YYYY'));
+
+INSERT INTO BANK_BRANCH VALUES 
+('B002','SBI','Boriwali Road','Mumbai','Maharashtra',TO_DATE('12-JAN-2000','DD-MON-YYYY'));
+
+INSERT INTO BANK_BRANCH VALUES 
+('B003','HDFC','AgraRoad','Agra','U.P',TO_DATE('04-FEB-1998','DD-MON-YYYY'));
+
+INSERT INTO BANK_BRANCH VALUES 
+('B004','DenaBank','CGRoad','Ahmedabad','Gujarat',TO_DATE('20-SEP-2012','DD-MON-YYYY'));
+
+INSERT INTO BANK_BRANCH VALUES 
+('B005','ICICI','MajavdiRoad','Junagadh','Gujarat',TO_DATE('07-MAY-2011','DD-MON-YYYY'));
+
+--------------------------------------------------
+
+-- 3. DISPLAY ALL
+SELECT * FROM BANK_BRANCH;
+
+-- 4
+SELECT BRANCH_ID FROM BANK_BRANCH;
+
+-- 5
+SELECT BRANCH_ID, BRANCH_ADDRESS FROM BANK_BRANCH;
+
+-- 6
+SELECT BRANCH_NAME, BRANCH_ADDRESS, BRANCH_CITY FROM BANK_BRANCH;
+
+-- 7
+SELECT BRANCH_CITY, BRANCH_STATE, BRANCH_OPEN_DATE FROM BANK_BRANCH;
+
+--------------------------------------------------
+
+-- 8–11 SORTING
+SELECT * FROM BANK_BRANCH ORDER BY BRANCH_ID;
+SELECT * FROM BANK_BRANCH ORDER BY BRANCH_NAME;
+SELECT * FROM BANK_BRANCH ORDER BY BRANCH_CITY;
+SELECT * FROM BANK_BRANCH ORDER BY BRANCH_STATE;
+
+--------------------------------------------------
+
+-- 12. CHANGE SIZE OF COLUMN
+ALTER TABLE BANK_BRANCH
+MODIFY BRANCH_STATE VARCHAR2(30);
+
+--------------------------------------------------
+
+-- 13. UPDATE BRANCH NAME (B003 → Union)
+UPDATE BANK_BRANCH
+SET BRANCH_NAME = 'Union'
+WHERE BRANCH_ID = 'B003';
+
+--------------------------------------------------
+
+-- 14. UPDATE STATE OF BOI → Delhi
+UPDATE BANK_BRANCH
+SET BRANCH_STATE = 'Delhi'
+WHERE BRANCH_NAME = 'BOI';
+
+--------------------------------------------------
+
+-- 15. UPDATE OPEN DATE OF UNION
+UPDATE BANK_BRANCH
+SET BRANCH_OPEN_DATE = TO_DATE('04-NOV-2015','DD-MON-YYYY')
+WHERE BRANCH_NAME = 'Union';
+
+--------------------------------------------------
+
+-- 16. ADD COLUMN PINCODE
+ALTER TABLE BANK_BRANCH
+ADD PINCODE NUMBER;
+
+--------------------------------------------------
+
+-- 17. INSERT PINCODE FOR DenaBank
+UPDATE BANK_BRANCH
+SET PINCODE = 360006
+WHERE BRANCH_NAME = 'DenaBank';
+
+--------------------------------------------------
+
+-- 18. DELETE RECORD (DATE = 07-MAY-2011)
+DELETE FROM BANK_BRANCH
+WHERE BRANCH_OPEN_DATE = TO_DATE('07-MAY-2011','DD-MON-YYYY');
+
+--------------------------------------------------
+
+-- 19. RENAME TABLE
+RENAME BANK_BRANCH TO BRANCH_MASTER;
+
+--------------------------------------------------
+
+-- 20. DISPLAY STRUCTURE
+DESC BRANCH_MASTER;
+
+--------------------------------------------------
+
+-- 21. CREATE NEW TABLE FROM EXISTING
+CREATE TABLE BRANCH_INFO AS
+SELECT * FROM BRANCH_MASTER;
