@@ -1,0 +1,91 @@
+-- 1. Create CUSTOMER table with proper normalization
+CREATE TABLE CUSTOMER (
+    CUST_NO NUMBER(4) PRIMARY KEY,
+    FIRST_NAME VARCHAR2(20) NOT NULL,
+    LAST_NAME VARCHAR2(20),
+    ADDRESS VARCHAR2(20),
+    CITY VARCHAR2(8),
+    STATE VARCHAR2(20),
+    PIN NUMBER(6),
+    B_DATE DATE,
+    STATUS CHAR(1) CHECK (STATUS IN ('V','I','A'))
+);
+
+--------------------------------------------------
+
+-- 2. Insert data into CUSTOMER table
+INSERT INTO CUSTOMER VALUES (1003,'RAJ','BAHADUR','SHANTI VILLA','UDP','KARNATAKA',576101,TO_DATE('01-AUG-1970','DD-MON-YYYY'),'V');
+INSERT INTO CUSTOMER VALUES (1004,'FELIX','SIMON','M-J-56','PJM','GOA',403002,TO_DATE('12-FEB-1971','DD-MON-YYYY'),'A');
+INSERT INTO CUSTOMER VALUES (1005,'RAJAN','KUTTY','A1 TRADERS','KNR','KERALA',670001,TO_DATE('09-JUN-1971','DD-MON-YYYY'),'A');
+INSERT INTO CUSTOMER VALUES (1006,'SHILPA','PAI','12/4B','MNG','KARNATAKA',574154,TO_DATE('11-DEC-1970','DD-MON-YYYY'),'I');
+INSERT INTO CUSTOMER VALUES (1007,'BOSCO','RAKSHIT','R.K. PLAZA','BNG','KARNATAKA',576201,TO_DATE('01-JAN-1971','DD-MON-YYYY'),'A');
+
+--------------------------------------------------
+
+-- 3. Display all records
+SELECT * FROM CUSTOMER;
+
+-- 4. Display all records where state is KARNATAKA
+SELECT * FROM CUSTOMER WHERE STATE='KARNATAKA';
+
+-- 5. Delete row where PIN is 576201
+DELETE FROM CUSTOMER WHERE PIN=576201;
+
+-- 6. Set PIN = 476001 where CUST_NO = 1004
+UPDATE CUSTOMER SET PIN=476001 WHERE CUST_NO=1004;
+
+-- 7. Change ADDRESS and PIN where CUST_NO = 1003
+UPDATE CUSTOMER 
+SET ADDRESS='KAVI MUDDANNA MARG', PIN=576104
+WHERE CUST_NO=1003;
+
+-- 8. Delete records of GOA state
+DELETE FROM CUSTOMER WHERE STATE='GOA';
+
+-- Retrieve all records after deletion
+SELECT * FROM CUSTOMER;
+
+-- 9. List all records for INVALID ('I') persons
+SELECT * FROM CUSTOMER WHERE STATUS='I';
+
+-- 10. Select distinct states
+SELECT DISTINCT STATE FROM CUSTOMER;
+
+-- 11. Sort customer data by state alphabetically
+SELECT * FROM CUSTOMER ORDER BY STATE ASC;
+
+-- 12. Sort customer data by state in descending order
+SELECT * FROM CUSTOMER ORDER BY STATE DESC;
+
+-- 13. Records of KARNATAKA customers who are VALID ('V')
+SELECT * FROM CUSTOMER WHERE STATE='KARNATAKA' AND STATUS='V';
+
+-- 14. Retrieve records of Karnataka / Kerala customers
+SELECT * FROM CUSTOMER WHERE STATE IN ('KARNATAKA','KERALA');
+
+-- 15. Retrieve records of Karnataka / Kerala customers who are ACTIVE ('A')
+SELECT * FROM CUSTOMER WHERE STATE IN ('KARNATAKA','KERALA') AND STATUS='A';
+
+-- 16. Karnataka customers with PIN=576201
+SELECT * FROM CUSTOMER WHERE STATE='KARNATAKA' AND PIN=576201;
+
+-- 17. Display all rows except for CUST_NO=1005
+SELECT * FROM CUSTOMER WHERE CUST_NO <> 1005;
+
+-- 18. Retrieve rows where state begins with 'K' and followed by any character
+SELECT * FROM CUSTOMER WHERE STATE LIKE 'K%';
+
+-- 19. Retrieve rows where first name contains 'RAJ'
+SELECT * FROM CUSTOMER WHERE FIRST_NAME LIKE '%RAJ%';
+
+-- 20. Display rows with CUST_NO in range 1003 to 1005
+SELECT * FROM CUSTOMER WHERE CUST_NO BETWEEN 1003 AND 1005;
+
+-- 21. Display rows whose B_DATE is between 10-JAN-71 and 31-DEC-71
+SELECT * FROM CUSTOMER WHERE B_DATE BETWEEN TO_DATE('10-JAN-1971','DD-MON-YYYY') AND TO_DATE('31-DEC-1971','DD-MON-YYYY');
+
+-- 22. Retrieve rows where city is UDP, MNG, BNG, or PGN
+SELECT * FROM CUSTOMER WHERE CITY IN ('UDP','MNG','BNG','PGN');
+
+-- 23. Rename table from CUSTOMER to CUST
+ALTER TABLE CUSTOMER RENAME TO CUST;
